@@ -1,0 +1,23 @@
+extends ./layout0
+
+
+block body
+	.navbar.navbar-default
+		.container-fluid
+			.navbar-header
+				a.navbar-brand(href='javascript:void(0)') 咕咕咕
+	.container-fluid
+		.row
+			button#updateStockListBtn.btn.btn-default 更新股票列表
+		.row
+			.table-responsive.stockList
+				table.table.table-hover.table-striped
+					thead
+						tr
+							th 代码
+							th 名称
+							th 更新时间
+					tbody#stockTbody
+			.page
+block scripts
+	script(src="/js/default.js")

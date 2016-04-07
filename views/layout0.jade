@@ -1,0 +1,34 @@
+doctype html
+html
+	head
+		if locals.title
+			title= title
+		else
+			title 咕咕咕
+
+		// Viewport mobile tag for sensible mobile support
+		meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+
+		// STYLES
+		link(rel="stylesheet", href="/styles/bootstrap.min.css")
+		link(rel="stylesheet", href="/styles/importer.css")
+		// STYLES END
+
+		block styles
+
+	body
+		block body
+		// SCRIPTS
+		script(src="/js/dependencies/sails.io.js")
+		script(src="/js/dependencies/lodash.min.js")
+		script(src="/js/dependencies/jquery-2.2.2.min.js")
+		script(src="/js/dependencies/jquery.blockUI.js")
+		script(src="/js/dependencies/bootstrap.min.js")
+		script(src="/js/dependencies/moment-with-locales.min.js")
+		script(src="/js/utils/constant.js")
+		script(src="/js/utils/service.js")
+		script(src="/js/utils/ui.js")
+		// SCRIPTS END
+		script(type='text/javascript').
+			moment.locale('zh-cn');
+		block scripts
