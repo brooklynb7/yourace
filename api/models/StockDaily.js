@@ -11,7 +11,7 @@ module.exports = {
 		code: {
 			type: 'string'
 		},
-		date: {
+		time: {
 			type: 'integer'
 		},
 		volume: {

@@ -2,7 +2,9 @@
 
 var async = require('async');
 var _ = require('lodash');
+var moment = require('moment');
 var sinaAdapter = require('./adapters/SinaService');
+var xueqiuAdapter = require('./adapters/XueQiuService');
 
 module.exports = {
 	getSinaStockList: function(callback) {
@@ -21,6 +23,36 @@ module.exports = {
 				sinaAdapter.checkAndUpdateStocks(stock, cb);
 			}
 		], callback);
+	},
+
+	getDailyList: function(callback) {
+		let datetime = new Date(moment().format('YYYY-MM-DD 00:00:00')).getTime();
+		async.waterfall([
+			function(cb) {
+				Stock.find().exec(cb);
+			},
+			function(stocks, cb) {
+				let fns = [];
+				_.each(stocks, function(stock) {
+					fns.push(function(callback) {
+						xueqiuAdapter.getDailyList(stock.symbol, datetime, datetime,
+							function(err, rst) {
+								if (err || !_.isArray(rst)) {
+									rst = {};
+								} else {
+									rst = rst[0];
+									rst.code = stock.code;
+									rst.time = new Date(rst.time).getTime();
+								}
+								callback(null, rst);
+							});
+					});
+				});
+				async.parallel(_.slice(fns, 0, 1000), cb);
+			}
+		], function(err, result) {
+			callback(err, result);
+		});
 	},
 
 	getStocks: function(condition, callback) {
@@ -47,7 +79,10 @@ module.exports = {
 			function(callback) {
 				Stock
 					.find(query).sort(sort)
-					.skip(page * pageSize).limit(pageSize)
+					.paginate({
+						page: page,
+						limit: pageSize
+					})
 					.exec(callback);
 			}
 		], function(err, results) {

@@ -46,7 +46,8 @@ module.exports.routes = {
 
 	'GET /api/stock': 'StockController.query',
 	'POST /api/stock/update': 'StockController.updateAll',
-	'GET /api/stock/sina': 'StockController.getSinaStockList'
+	'GET /api/stock/sina': 'StockController.getSinaStockList',
+	'GET /api/stock/daily': 'StockController.getDailyList'
 
 	/***************************************************************************
 	 *                                                                          *

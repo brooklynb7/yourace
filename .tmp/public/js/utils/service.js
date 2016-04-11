@@ -30,7 +30,7 @@
 			url: this.getApiUrl('/stock/update'),
 			method: 'POST'
 		});
-	}
+	};
 
 	window.Service = new Service();
 })(jQuery);

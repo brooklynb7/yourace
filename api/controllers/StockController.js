@@ -43,5 +43,15 @@ module.exports = {
 				res.json(stocks);
 			}
 		});
+	},
+
+	getDailyList: function(req, res) {
+		StockService.getDailyList(function(err, list) {
+			if (err) {
+				res.status(500).send(err);
+			} else {
+				res.json(list);
+			}
+		});
 	}
 };
